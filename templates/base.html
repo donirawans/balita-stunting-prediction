@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GrowthCore - Skrining Status Gizi Balita{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="gc-header">
+        <div class="gc-brand">GrowthCore</div>
+        <div class="gc-subtitle">Toddler Nutritional Status Screening</div>
+        {% block description %}{% endblock %}
+    </header>
+
+    <main class="gc-main {% block main_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="gc-footer">
+        <p>Disclaimer: Hasil analisis ini merupakan alat bantu skrining awal dan tidak menggantikan diagnosis resmi tenaga medis.</p>
+        <p class="gc-copyright">© 2026 GrowthCore • Sistem Klasifikasi Status Gizi Balita</p>
+    </footer>
+</body>
+</html>

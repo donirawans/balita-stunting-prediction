@@ -1,0 +1,11 @@
+# Python & Virtual Environment
+venv/
+__pycache__/
+*.pyc
+
+# Environment Variables
+.env
+
+# Data & Datasets
+dataset_raw.xlsx
+data/*

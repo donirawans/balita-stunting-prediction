@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}GrowthCore - Skrining Status Gizi Balita{% endblock %}
+
+{% block description %}{% endblock %}
+
+{% block main_class %}gc-main--narrow{% endblock %}
+
+{% block content %}
+    <div class="gc-form-card">
+        <form method="post" action="{{ url_for('predict') }}" novalidate>
+
+            {% if errors %}
+                {% for e in errors %}
+                    <div class="gc-alert gc-alert--error">{{ e }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% if warnings %}
+                {% for w in warnings %}
+                    <div class="gc-alert gc-alert--warning">{{ w }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- ===== Informasi balita ===== -->
+            <div class="gc-section-title">Informasi balita</div>
+
+            <div class="gc-form-grid">
+                <div class="gc-field">
+                    <label>Jenis Kelamin</label>
+                    <div class="gc-segmented" role="radiogroup">
+                        {% for opsi in opsi_jenis_kelamin %}
+                            <input type="radio"
+                                   name="jenis_kelamin"
+                                   id="jk_{{ loop.index }}"
+                                   value="{{ opsi }}"
+                                   {% if data['jenis_kelamin'] %}
+                                       {% if data['jenis_kelamin'] == opsi %}checked{% endif %}
+                                   {% elif loop.first %}
+                                       checked
+                                   {% endif %}>
+                            <label for="jk_{{ loop.index }}">{{ opsi }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="gc-field">
+                    <label for="usia_bulan">Usia</label>
+                    <div class="gc-input-wrap">
+                        <input class="gc-input"
+                               type="number"
+                               id="usia_bulan"
+                               name="usia_bulan"
+                               min="0"
+                               max="59"
+                               step="any"
+                               placeholder="0"
+                               value="{{ data['usia_bulan'] or '' }}">
+                        <span class="gc-input-suffix">Bulan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Data antropometri ===== -->
+            <div class="gc-section-title">Data antropometri</div>
+
+            <div class="gc-form-grid--3col">
+                <div class="gc-field">
+                    <label for="berat">Berat Badan</label>
+                    <div class="gc-input-wrap">
+                        <input class="gc-input"
+                               type="number"
+                               id="berat"
+                               name="berat"
+                               min="2.0"
+                               max="20.8"
+                               step="0.1"
+                               placeholder="0.0"
+                               value="{{ data['berat'] or '' }}">
+                        <span class="gc-input-suffix">kg</span>
+                    </div>
+                </div>
+
+                <div class="gc-field">
+                    <label for="tinggi">Tinggi Badan</label>
+                    <div class="gc-input-wrap">
+                        <input class="gc-input"
+                               type="number"
+                               id="tinggi"
+                               name="tinggi"
+                               min="38.0"
+                               max="120.0"
+                               step="0.1"
+                               placeholder="0.0"
+                               value="{{ data['tinggi'] or '' }}">
+                        <span class="gc-input-suffix">cm</span>
+                    </div>
+                </div>
+
+                <div class="gc-field">
+                    <label for="lila">LiLA</label>
+                    <div class="gc-input-wrap">
+                        <input class="gc-input"
+                               type="number"
+                               id="lila"
+                               name="lila"
+                               min="5.0"
+                               max="30.0"
+                               step="0.1"
+                               placeholder="0.0"
+                               value="{{ data['lila'] or '' }}">
+                        <span class="gc-input-suffix">cm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Actions ===== -->
+            <div class="gc-action">
+                <button class="gc-btn gc-btn--primary" type="submit">Prediksi status</button>
+                <button class="gc-btn gc-btn--ghost" type="reset">Reset form</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

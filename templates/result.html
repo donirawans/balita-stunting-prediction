@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}GrowthCore - Hasil Klasifikasi{% endblock %}
+
+{% block content %}
+    <div class="gc-bento">
+
+        <!-- ===== Kolom kiri: Status, Probabilitas, Interpretasi ===== -->
+        <div class="gc-bento-left gc-bento-col">
+
+            <!-- Status -->
+            <div class="gc-card gc-status-card">
+                <div class="gc-status-label">Status Prediksi</div>
+                <div class="gc-status-value">{{ label }}</div>
+            </div>
+
+            <!-- Probabilitas Model -->
+            {% if prob_normal is not none and prob_stunting is not none %}
+            <div class="gc-card">
+                <h3 class="gc-card-title">Probabilitas Model</h3>
+
+                <div class="gc-meter">
+                    <div class="gc-meter-row">
+                        <span class="gc-meter-label{% if label == 'Normal' %} gc-meter-label--aktif{% endif %}">Normal</span>
+                        <span class="gc-meter-label{% if label == 'Normal' %} gc-meter-label--aktif{% endif %}">{{ (prob_normal * 100)|round|int }}%</span>
+                    </div>
+                    <div class="gc-meter-track">
+                        <div class="gc-meter-fill{% if label != 'Normal' %} gc-meter-fill--pasif{% endif %}" style="width:{{ (prob_normal * 100)|round|int }}%"></div>
+                    </div>
+                </div>
+
+                <div class="gc-meter">
+                    <div class="gc-meter-row">
+                        <span class="gc-meter-label{% if label == 'Stunting' %} gc-meter-label--aktif{% endif %}">Stunting</span>
+                        <span class="gc-meter-label{% if label == 'Stunting' %} gc-meter-label--aktif{% endif %}">{{ (prob_stunting * 100)|round|int }}%</span>
+                    </div>
+                    <div class="gc-meter-track">
+                        <div class="gc-meter-fill{% if label != 'Stunting' %} gc-meter-fill--pasif{% endif %}" style="width:{{ (prob_stunting * 100)|round|int }}%"></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Interpretasi -->
+            <div class="gc-card">
+                <h4 class="gc-card-title--sm">Interpretasi</h4>
+                <p class="gc-card-text">{{ interpretasi }}</p>
+            </div>
+        </div>
+
+        <!-- ===== Kolom kanan: Rekomendasi ===== -->
+        <div class="gc-bento-right gc-bento-col">
+            {% for rec in rekomendasi %}
+            <div class="gc-card">
+                <h3 class="gc-card-title">{{ rec['judul'] }}</h3>
+                <ul class="gc-rec-list">
+                    {% for poin in rec['poin'] %}
+                    <li class="gc-rec-item">
+                        <span class="gc-rec-dot"></span>
+                        <span class="gc-rec-text">{{ poin }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ===== Aksi ===== -->
+    <div class="gc-action gc-action--center">
+        <a class="gc-btn gc-btn--primary gc-btn--result" href="{{ url_for('index') }}">
+            <span class="gc-btn-icon">&#8592;</span>
+            Cek Data Baru
+        </a>
+    </div>
+{% endblock %}
